@@ -39,7 +39,7 @@ export default function SignIn({toast}) {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: '100vh', backgroundImage: 'url(https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',}}>
         <CssBaseline />
         <Grid
           item
@@ -47,15 +47,19 @@ export default function SignIn({toast}) {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            // backgroundImage: 'url(https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
+            // backgroundRepeat: 'no-repeat',
+            // backgroundColor: (t) =>
+            //   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            // backgroundSize: 'cover',
+            // backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{
+          backgroundColor: 'transparent',
+          background: 'rgba(0, 0, 0, 0.6)',
+          color: 'white !important' 
+          }}>
           <Box
             sx={{
               my: 8,
@@ -81,6 +85,7 @@ export default function SignIn({toast}) {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                sx={{ input: { color: 'white', borderColor: 'white'}, label: {color: 'white', opacity: 0.5}}}
               />
               <TextField
                 margin="normal"
@@ -91,6 +96,7 @@ export default function SignIn({toast}) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                sx={{ input: { color: 'white', borderColor: 'white'}, label: {color: 'white', opacity: 0.5}}}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

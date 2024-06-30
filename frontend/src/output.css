@@ -591,3 +591,7 @@ video {
 .flex {
   display: flex;
 }
+
+.border {
+  border-width: 1px;
+}
