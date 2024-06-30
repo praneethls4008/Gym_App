@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link as RouterLink } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -38,24 +39,7 @@ export default function SignIn({toast}) {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh', backgroundImage: 'url(https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',}}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            // backgroundImage: 'url(https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
-            // backgroundRepeat: 'no-repeat',
-            // backgroundColor: (t) =>
-            //   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            // backgroundSize: 'cover',
-            // backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{
+    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{
           backgroundColor: 'transparent',
           background: 'rgba(0, 0, 0, 0.6)',
           color: 'white !important' 
@@ -70,7 +54,7 @@ export default function SignIn({toast}) {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
+              <img src='public\profile.png'/>
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -84,7 +68,6 @@ export default function SignIn({toast}) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 sx={{ input: { color: 'white', borderColor: 'white'}, label: {color: 'white', opacity: 0.5}}}
               />
               <TextField
@@ -99,7 +82,7 @@ export default function SignIn({toast}) {
                 sx={{ input: { color: 'white', borderColor: 'white'}, label: {color: 'white', opacity: 0.5}}}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color="primary" sx={{color: '#d4d4d4'}}/>}
                 label="Remember me"
               />
               <Button
@@ -112,21 +95,19 @@ export default function SignIn({toast}) {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" sx={{color: '#d4d4d4'}}>
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link component={RouterLink} to="/signup" variant="body2" sx={{color: '#d4d4d4'}}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Copyright sx={{ mt: 5, color: '#d4d4d4'}} />
             </Box>
           </Box>
         </Grid>
-      </Grid>
-    </ThemeProvider>
   );
 }
