@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,11 +8,12 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from "react-router-dom";
-import { colors } from '@mui/material';
+import { useState } from 'react';
+import axios from 'axios';
+import bcrypt from 'bcryptjs/dist/bcrypt';
 
 function Copyright(props) {
   return (
@@ -33,10 +33,32 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp({toast}) {
+
+  const [SignUpButtonEnable , setSignUpButtonEnable] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    toast.success(`signed Up with ${data.get('email')}`)
+    let msg = '';
+    const email = data.get('email');
+    const name = data.get('name');
+    const password = data.get('password');
+    if(email.length<5 || !email.includes('@')){
+      msg+=' email';
+    }
+    if(name.length<4){
+      msg+=' name';
+    }
+    if(password.length<6){
+      msg+=' password';
+    }
+    if(msg.length>0) {
+      toast.error(`invalid: ${msg}`)
+    }
+    else{
+      axios.post('http://localhost:3000/user',JSON.stringify({"name": name, "password": bcrypt.hashSync(password, 2), "email": email}));
+      toast.success(`signed Up with ${data.get('email')}`)
+    }
   };
 
   return (

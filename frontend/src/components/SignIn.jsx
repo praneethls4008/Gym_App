@@ -13,7 +13,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from "react-router-dom";
-
+import axios from 'axios';
+import bcrypt from 'bcryptjs/dist/bcrypt';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -35,7 +36,9 @@ export default function SignIn({toast}) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    toast.success(`signed in with ${data.get('email')}`)
+    axios.get(`http://localhost:3000/user?email=${data.get('email')}`).then(response=>response.data[0].password).then(hash=>console.log(bcrypt.compareSync(data.get('password'), hash)))
+    //toast.success(`signed in with ${data.get('email')}`)
+    
   };
 
   return (
