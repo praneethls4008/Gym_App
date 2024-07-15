@@ -3,9 +3,10 @@ package com.example.spring1.service;
 import com.example.spring1.model.User;
 import com.example.spring1.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class UserService{
 
     @Autowired
