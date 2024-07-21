@@ -6,8 +6,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.stereotype.Repository;
 
 //mongo doc with collection name
+
 @Document(collection="users")
 @Accessors(fluent = true, chain = true)
 //lombok getters setters naming convention with exact variable names and can chain variables together while setting

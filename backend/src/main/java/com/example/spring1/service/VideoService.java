@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +22,11 @@ public class VideoService {
     }
 
     public Optional<Video> findByOwner(String ownerId) {
-        return videoRepository.findByOwner(ownerId);
+        return videoRepository.findByOwnerID(ownerId);
+    }
+
+    public List<Video> getAllVideos(){
+        return videoRepository.findAll();
     }
 
     public Page<Video> findByIsPrivate(boolean isPrivate, int offset, int pageSize){
@@ -32,5 +37,9 @@ public class VideoService {
     public Page<Video> findAllVideos(int offset, int pageSize, String sortByField){
         Page<Video> pagenatedVideos = videoRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.ASC,sortByField)));
         return pagenatedVideos;
+    }
+
+    public Optional<Video> deleteByOwnerID(String ownerID){
+        return videoRepository.deleteByOwnerID(ownerID);
     }
 }

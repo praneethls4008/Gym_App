@@ -19,7 +19,7 @@ public class Video {
     @Indexed(unique = true)
     private String url;
     @Indexed(unique = false)
-    private String owner;
+    private String ownerID;
     private boolean isPrivate;
     private List<String> privateViewers;
     private String title;
