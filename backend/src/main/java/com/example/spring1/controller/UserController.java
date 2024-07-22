@@ -15,6 +15,7 @@ public class UserController {
 @PostMapping("/new")
 public ResponseEntity<?> CreateUser(@RequestBody User user){
     System.out.println("in post");
+    System.out.println(user);
         try{
             userService.createNewUser(user);
             return new ResponseEntity<>("User Registered successfully.", HttpStatus.CREATED);

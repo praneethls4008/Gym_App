@@ -1,7 +1,9 @@
 package com.example.spring1.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -17,20 +19,25 @@ import org.springframework.stereotype.Repository;
 @Data
 // generates getters, setters, equals(), hashCode(), and toString() methods for the class.
 public class User {
-    @MongoId(FieldType.OBJECT_ID)
+    @Id
     //object id as ID
     private String id;
 
+    @JsonProperty("name")
     private String name;
 
+    @JsonProperty("age")
     private int age;
 
+    @JsonProperty("email")
     @Indexed(unique = true)
     private String email;
 
+    @JsonProperty("mobile")
     @Indexed(unique = true)
     private long mobile;
 
+    @JsonProperty("password")
     private String password;
 
 

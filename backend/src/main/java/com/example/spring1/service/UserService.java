@@ -26,7 +26,8 @@ public class UserService {
     }
 
     public void createNewUser(User user) throws Exception {
-
+    System.out.println(user);
+        System.out.println(user.mobile());
         if (userRepository.findByMobile(user.mobile()).isPresent()) {
             throw new Exception("Mobile number is already registered!");
         }
