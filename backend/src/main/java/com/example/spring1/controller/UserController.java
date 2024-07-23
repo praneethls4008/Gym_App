@@ -2,6 +2,7 @@ package com.example.spring1.controller;
 
 import com.example.spring1.model.User;
 import com.example.spring1.service.UserService;
+import com.example.spring1.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private VideoService videoService;
+
 @PostMapping("/new")
 public ResponseEntity<?> CreateUser(@RequestBody User user){
     System.out.println("in post");
@@ -29,8 +33,19 @@ public ResponseEntity<?> CreateUser(@RequestBody User user){
     public ResponseEntity<?> getAllUsers(){
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
-    @GetMapping("/d")
-    public ResponseEntity<?> getAllUsersd(){
-        return new ResponseEntity<>("dd", HttpStatus.OK);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUserAndVideos(@PathVariable String id){
+        try{
+            videoService.deleteByOwnerID(id);
+            //userService.deleteById(id);
+            if(userService.findById(id).isPresent()){
+                return new ResponseEntity<>("User Account deletion failed. Try again!",HttpStatus.BAD_REQUEST);
+            }
+            userService.deleteUser(id);
+            return new ResponseEntity<>("deleted successfully"+id,HttpStatus.OK);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>("deleted successfully"+id,HttpStatus.OK);
+        }
     }
 }

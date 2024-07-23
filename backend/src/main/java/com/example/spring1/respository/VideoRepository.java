@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface VideoRepository extends MongoRepository<Video,String> {
     Optional<Video> findByUrl(String url);
     Optional<Video> findByOwnerID(String ownerID);
-    Optional<Video> deleteByOwnerID(String ownerID);
+    void deleteByOwnerID(String ownerID);
     //select * from Post where user=user and status=status order by createdAt desc
     //findByUserAndStatusOrderByCreatedAtDesc(PageRequest pageRequest,User user, boolean status);
     Page<Video> findByIsPrivate(PageRequest pageRequest, boolean isPrivate);
