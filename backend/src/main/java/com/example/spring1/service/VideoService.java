@@ -15,8 +15,7 @@ import java.util.Optional;
 public class VideoService {
     @Autowired
     VideoRepository videoRepository;
-    @Autowired
-    UserService userService;
+
 
     public Optional<Video> findByUrl(String url) {
         return videoRepository.findByUrl(url);
@@ -43,16 +42,16 @@ public class VideoService {
     public void deleteByOwnerID(String ownerID) throws Exception{
         videoRepository.deleteByOwnerID(ownerID);
         if(videoRepository.findByOwnerID(ownerID).isPresent()){
-            throw new Exception("User Videos are not delete. Try again!");
+            throw new Exception("User Videos are not deleted. Try again!");
         }
     }
 
     public void createVideo(Video video) throws Exception{
-        if(userService.findById(video.ownerID()).isPresent()){
+        try{
             videoRepository.save(video);
         }
-        else{
-            throw new Exception("OwnerID is not found to add video!");
+        catch(Exception e){
+            throw new Exception("Failed to save video. Try again!");
         }
     }
 

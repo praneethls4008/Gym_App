@@ -37,15 +37,11 @@ public ResponseEntity<?> CreateUser(@RequestBody User user){
     public ResponseEntity<?> deleteUserAndVideos(@PathVariable String id){
         try{
             videoService.deleteByOwnerID(id);
-            //userService.deleteById(id);
-            if(userService.findById(id).isPresent()){
-                return new ResponseEntity<>("User Account deletion failed. Try again!",HttpStatus.BAD_REQUEST);
-            }
             userService.deleteUser(id);
             return new ResponseEntity<>("deleted successfully"+id,HttpStatus.OK);
         }
         catch(Exception e){
-            return new ResponseEntity<>("deleted successfully"+id,HttpStatus.OK);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 }

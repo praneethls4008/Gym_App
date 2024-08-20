@@ -13,8 +13,7 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private VideoService videoService;
+
 
     public Optional<User> findById(String id) {
         return userRepository.findById(id);
@@ -45,7 +44,6 @@ public class UserService {
     }
 
     public void deleteUser(String id) throws Exception {
-        videoService.deleteByOwnerID(id);
         userRepository.deleteById(id);
         if(userRepository.findById(id).isPresent()){
             throw new Exception("User Account deletion failed. Try again!");
