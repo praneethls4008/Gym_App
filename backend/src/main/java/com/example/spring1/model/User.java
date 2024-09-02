@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 //mongo doc with collection name
@@ -39,7 +40,5 @@ public class User {
 
     @JsonProperty("password")
     private String password;
-
-
 
 }

@@ -33,11 +33,34 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn({toast}) {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios.get(`http://localhost:3000/user?email=${data.get('email')}`).then(response=>response.data[0].password).then(hash=>console.log(bcrypt.compareSync(data.get('password'), hash)))
-    //toast.success(`signed in with ${data.get('email')}`)
+    const formData = new URLSearchParams();
+    formData.append('username', data.get('email'));
+    formData.append('password', data.get('password'));
+
+    try {
+      // Send POST request to the login endpoint
+      const response = await axios.post('http://localhost:8080/login', formData.toString(), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        withCredentials: true, // Include cookies for session management
+      });
+
+      if (response.request.responseURL.includes('/login?error')) {
+        toast.success(`failed`);
+        console.error('Authentication Failed:', error);
+      }
+      else{
+        console.log('Login successful');
+        window.location.replace("http://localhost:8080/user/")
+        toast.success(`signed in`);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
     
   };
 

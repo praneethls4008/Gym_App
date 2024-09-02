@@ -56,6 +56,17 @@ export default function SignUp({toast}) {
       toast.error(`invalid: ${msg}`)
     }
     else{
+      // axios.post("http://localhost:8080/signup",
+      //   {
+      //     "email": data.get('email'),
+      //     "password": data.get('password')
+      //   }).then(response => {
+      //     if(response.status===200){
+      //       console.log('logged in successfully');
+      //       toast.success(`signed in`);
+      //     }
+      //   })
+      //   .catch(err => console.log(err))
       axios.post('http://localhost:3000/user',JSON.stringify({"name": name, "password": bcrypt.hashSync(password, 2), "email": email}));
       toast.success(`signed Up with ${data.get('email')}`)
     }

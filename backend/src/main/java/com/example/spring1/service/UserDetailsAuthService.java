@@ -1,6 +1,7 @@
 package com.example.spring1.service;
 
 import com.example.spring1.model.User;
+import com.example.spring1.model.UserPrinciples;
 import com.example.spring1.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +19,6 @@ public class UserDetailsAuthService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.email())
-                .password(user.password())
-                .roles("USER","OWNER")
-                .build();
+        return new UserPrinciples(user);
     }
 }

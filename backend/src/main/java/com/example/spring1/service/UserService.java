@@ -4,12 +4,17 @@ import com.example.spring1.model.User;
 import com.example.spring1.respository.UserRepository;
 import com.example.spring1.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 @Service
 public class UserService {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -28,14 +33,13 @@ public class UserService {
     }
 
     public void createNewUser(User user) throws Exception {
-    System.out.println(user);
-        System.out.println(user.mobile());
         if (userRepository.findByMobile(user.mobile()).isPresent()) {
             throw new Exception("Mobile number is already registered!");
         }
         if (userRepository.findByEmail(user.email()).isPresent()) {
             throw new Exception("Email is already registered!");
         }
+        user.password(passwordEncoder.encode(user.password()));
         userRepository.save(user);
     }
 

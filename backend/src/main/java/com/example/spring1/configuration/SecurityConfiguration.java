@@ -23,24 +23,16 @@ public class SecurityConfiguration{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable());
-        return http.authorizeHttpRequests(request -> {
-            request.requestMatchers("/user").hasRole("OWNER");
-            request.requestMatchers("/video").hasRole("REGISTERED_USER");
-            request.anyRequest().permitAll();
-        })
-                .formLogin(form -> form
-                        .loginPage("/signin")
-                        .permitAll()
-                )
-                .logout(logout -> logout.permitAll())
+        return http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(request -> {
+                    request.requestMatchers("/user/new").permitAll();
+                    request.anyRequest().authenticated();
+                })
+                .formLogin(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
+//                .formLogin(form -> form.loginPage("/login").permitAll())
                 .build();
-
-    }
-
-    @Bean
-    UserDetailsService userDetailsService(){
-        return userDetailsAuthService;
     }
 
     @Bean
@@ -53,7 +45,7 @@ public class SecurityConfiguration{
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(10);
     }
 
 
