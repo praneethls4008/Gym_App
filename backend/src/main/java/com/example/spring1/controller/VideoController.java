@@ -38,7 +38,7 @@ public class VideoController {
     @PostMapping("/new")
     public ResponseEntity<?> newVideo(@RequestBody Video video){
         try{
-            video.uploadDate(new Date());
+            video.setUploadDate(new Date());
             videoService.createVideo(video);
             return new ResponseEntity<>("Video added successfully!", HttpStatus.OK);
         }catch(Exception e){

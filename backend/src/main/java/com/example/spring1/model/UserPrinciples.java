@@ -14,8 +14,8 @@ public class UserPrinciples implements UserDetails {
     private String password;
 
     public UserPrinciples(User user){
-        this.email = user.email();
-        this.password = user.password();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
     }
 
     @Override

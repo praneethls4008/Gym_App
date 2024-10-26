@@ -4,6 +4,9 @@ import com.example.spring1.model.User;
 import com.example.spring1.respository.UserRepository;
 import com.example.spring1.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -32,14 +35,22 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public String getUsername(String id){
+        return userRepository.findById(id).orElseThrow().getUsername();
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public void createNewUser(User user) throws Exception {
-        if (userRepository.findByMobile(user.mobile()).isPresent()) {
+        if (userRepository.findByMobile(user.getMobile()).isPresent()) {
             throw new Exception("Mobile number is already registered!");
         }
-        if (userRepository.findByEmail(user.email()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new Exception("Email is already registered!");
         }
-        user.password(passwordEncoder.encode(user.password()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -52,5 +63,10 @@ public class UserService {
         if(userRepository.findById(id).isPresent()){
             throw new Exception("User Account deletion failed. Try again!");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow();
     }
 }
