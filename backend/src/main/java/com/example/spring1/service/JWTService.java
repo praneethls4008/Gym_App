@@ -47,7 +47,7 @@ public class JWTService {
     }
 
     public boolean isValid(String token, UserDetails userDetails){
-        return getClaim(token, Claims::getSubject).equals(userDetails.getUsername());
+        return getClaim(token, Claims::getSubject).equals(userDetails.getUsername()) && getClaim(token, Claims::getExpiration).before(new Date(System.currentTimeMillis()));
     }
 
     public boolean isTokenExpired(String token){
